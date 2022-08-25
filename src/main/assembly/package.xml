@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+    <id>jar-with-dependencies</id>
+    <formats>
+        <format>jar</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>/</outputDirectory>
+            <useProjectArtifact>true</useProjectArtifact>
+            <unpack>true</unpack>
+            <scope>runtime</scope>
+            <excludes>
+                <!-- 排除这些在kafkatool2/lib存在的相关依赖-->
+                <exclude>org.projectlombok:lombok</exclude>
+                <!-- 这些应该用不到-->
+                <exclude>org.apache.hadoop:hadoop-annotations</exclude>
+                <exclude>org.apache.hadoop:hadoop-auth</exclude>
+                <exclude>org.apache.hadoop:hadoop-common</exclude>
+                <exclude>org.apache.hadoop:hadoop-core</exclude>
+                <exclude>org.apache.hbase:hbase-annotations</exclude>
+                <exclude>org.apache.hbase:hbase-client</exclude>
+                <exclude>org.apache.hbase:hbase-protocol</exclude>
+                <exclude>org.apache.hbase:hbase-common</exclude>
+                <exclude>org.apache.kudu:kudu-client</exclude>
+                <exclude>io.netty:netty-all</exclude>
+                <exclude>javax.mail:mail</exclude>
+                <exclude>javax.servlet.jsp:jsp-api</exclude>
+                <exclude>javax.servlet:servlet-api</exclude>
+                <exclude>junit:junit</exclude>
+                <exclude>tomcat:jasper-compiler</exclude>
+                <exclude>tomcat:jasper-runtime</exclude>
+                <exclude>hsqldb:hsqldb</exclude>
+                <exclude>com.github.stephenc.findbugs:findbugs-annotations</exclude>
+                <exclude>com.google.code.findbugs:jsr</exclude>
+                <exclude>com.sun.jersey:jersey-core</exclude>
+                <exclude>com.sun.jersey:jersey-json</exclude>
+                <exclude>commons-httpclient:commons-httpclient</exclude>
+                <exclude>org.apache.curator:curator-client</exclude>
+                <exclude>org.apache.curator:curator-framework</exclude>
+                <exclude>org.apache.curator:curator-recipes</exclude>
+                <exclude>org.mortbay.jetty:jetty</exclude>
+                <exclude>org.mortbay.jetty:jetty-util</exclude>
+            </excludes>
+        </dependencySet>
+    </dependencySets>
+</assembly>
