@@ -9,7 +9,7 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseInputListener;
 import lombok.SneakyThrows;
-import org.eu.liuhaowei.utils.RateUtil;
+import org.eu.liuhaowei.utils.XrandrUtil;
 import org.eu.liuhaowei.utils.XsetUtil;
 
 import java.util.Timer;
@@ -30,8 +30,8 @@ public class GlobalListenerFps {
     private static final long touchSlackMs = 5;
     private static final long forceOffMs = 30;
 
-    private static final String maxRate = RateUtil.getMaxRate();
-    private static final String minRate = RateUtil.getMinRate();
+    private static final String maxRate = XrandrUtil.getMaxRate();
+    private static final String minRate = XrandrUtil.getMinRate();
 
     private static final AtomicLong longTime = new AtomicLong(System.currentTimeMillis());
 
@@ -102,17 +102,21 @@ public class GlobalListenerFps {
     @SneakyThrows
     private static void addExecutor() {
         longTime.set(System.currentTimeMillis());
+
         touchSlackExecutor.execute(new Runnable() {
             @Override
             @SneakyThrows
             public void run() {
-                if (!StrUtil.equals(RateUtil.getRate(), maxRate)) {
-                    RateUtil.setRate(maxRate);
+                if (!StrUtil.equals(XrandrUtil.getRate(), maxRate)) {
+                    XrandrUtil.setRate(maxRate);
                     System.out.println(DateUtil.now() + " " + StrFormatter.format("调整fps->{}", maxRate));
                 }
                 TimeUnit.SECONDS.sleep(touchSlackMs);
-                if (System.currentTimeMillis() - 10 > longTime.get() + TimeUnit.SECONDS.toMillis(touchSlackMs) && !StrUtil.equals(RateUtil.getRate(), minRate)) {
-                    RateUtil.setRate(minRate);
+                if (System.currentTimeMillis() - 10 > longTime.get() + TimeUnit.SECONDS.toMillis(touchSlackMs) && !StrUtil.equals(XrandrUtil.getRate(), minRate)) {
+                    //监视器关闭状态不调整!!!
+                    if (XsetUtil.monitorStatus()) {
+                        XrandrUtil.setRate(minRate);
+                    }
                     System.out.println(DateUtil.now() + " " + StrFormatter.format("调整fps->{}", minRate));
                     if (forceOffSwitch) {
                         //进入屏幕

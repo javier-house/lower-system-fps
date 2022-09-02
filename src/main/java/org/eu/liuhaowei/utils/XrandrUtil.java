@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * @author JavierHouse
  */
-public class RateUtil {
+public class XrandrUtil {
 
     /**
      * 配置刷新率
